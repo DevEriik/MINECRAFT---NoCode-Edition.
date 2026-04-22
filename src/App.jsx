@@ -6,19 +6,18 @@ import heroImg from "./assets/hero.png";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <BrowserRouter>
       {/* <Header /> */}
       <main>
         <Routes>
-          <Route
-            path="/"
-            element={<div>Componente en construccion</div>}
-          ></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/item/:id" element={<Details />} />
+          <Route path="/favoritos" element={<Favoritos />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </main>
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 }

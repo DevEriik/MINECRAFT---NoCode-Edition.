@@ -7,10 +7,10 @@ function App() {
       {/* <Header /> */}
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/item/:id" element={<Details />} />
-          <Route path="/favoritos" element={<Favoritos />} />
-          <Route path="*" element={<Error404 />} />
+          <Route path="/" element={<div>Pagina Home</div>} />
+          <Route path="/item/:id" element={<div>Pagina detalle</div>} />
+          <Route path="/favoritos" element={<div>Pagina favoritos</div>} />
+          <Route path="*" element={<div>Pagina ERROR</div>} />
         </Routes>
       </main>
       {/* <Footer /> */}

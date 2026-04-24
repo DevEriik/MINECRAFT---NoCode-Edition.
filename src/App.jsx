@@ -1,26 +1,26 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import heroImg from "./assets/hero.png";
-import "./App.css";
+
+import Home from './pages/Home/Home.jsx'
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
+import "./i18n";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <BrowserRouter>
-      {/* <Header /> */}
-      <main>
-        <Routes>
-          <Route
-            path="/"
-            element={<div>Componente en construccion</div>}
-          ></Route>
-        </Routes>
-      </main>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow p-4 lg:p-8">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }
 
 export default App;
+

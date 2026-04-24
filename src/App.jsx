@@ -3,8 +3,6 @@ import { useState } from "react";
 import Home from '.pages/Home/Home.jsx'
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <BrowserRouter>
       {/* <Header /> */}
@@ -14,8 +12,13 @@ function App() {
             path="/"
             element={<Home />}
           ></Route>
+          <Route path="/" element={<div>Pagina Home</div>} />
+          <Route path="/item/:id" element={<div>Pagina detalle</div>} />
+          <Route path="/favoritos" element={<div>Pagina favoritos</div>} />
+          <Route path="*" element={<div>Pagina ERROR</div>} />
         </Routes>
       </main>
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 }

@@ -8,11 +8,7 @@ function App() {
       {/* <Header /> */}
       <main>
         <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          ></Route>
-          <Route path="/" element={<div>Pagina Home</div>} />
+          <Route path="/" element={<Home />} />          
           <Route path="/item/:id" element={<div>Pagina detalle</div>} />
           <Route path="/favoritos" element={<div>Pagina favoritos</div>} />
           <Route path="*" element={<div>Pagina ERROR</div>} />

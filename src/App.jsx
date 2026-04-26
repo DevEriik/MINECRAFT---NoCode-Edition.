@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
-import Home from './pages/Home/Home.jsx'
-import Header from "./Components/Header/Header";
-import Footer from "./Components/Footer/Footer";
+import Home from "./pages/Home/Home.jsx";
+import Header from "./components/Header/Header.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 import "./i18n";
 
 function App() {
@@ -23,4 +23,3 @@ function App() {
 }
 
 export default App;
-

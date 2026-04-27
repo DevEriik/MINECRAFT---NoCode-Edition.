@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { Favorites } from './pages/Favorites/Favorites';
 
 import Home from './pages/Home/Home.jsx'
 import Header from "./Components/Header/Header";
@@ -12,9 +13,9 @@ function App() {
       {/* <Header /> */}
       <main>
         <Routes>
-          <Route path="/item/:id" element={<div>Pagina detalle</div>} />
-          <Route path="/favoritos" element={<div>Pagina favoritos</div>} />
-          <Route path="*" element={<div>Pagina ERROR</div>} />
+          <Route path="/item/:id" element={<div>Pagina detalle</div>} />  
+          <Route path="/favoritos" element={<Favorites />} />
+          <Route path="*" element={<div></div>} />
         </Routes>
       </main>
       {/* <Footer /> */}

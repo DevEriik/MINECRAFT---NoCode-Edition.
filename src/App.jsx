@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Details from "./pages/Details/Details";
+import { useState } from "react";
+import { Favorites } from './pages/Favorites/Favorites';
+
+import Home from './pages/Home/Home.jsx'
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import "./i18n";
@@ -8,7 +10,16 @@ import "./i18n";
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col bg-white">
+      {/* <Header /> */}
+      <main>
+        <Routes>
+          <Route path="/item/:id" element={<div>Pagina detalle</div>} />  
+          <Route path="/favoritos" element={<Favorites />} />
+          <Route path="*" element={<div></div>} />
+        </Routes>
+      </main>
+      {/* <Footer /> */}
+      <div className="min-h-screen flex flex-col">
         <Header />
 
         <main className="flex-grow p-4 lg:p-8">

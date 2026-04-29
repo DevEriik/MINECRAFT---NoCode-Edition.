@@ -20,6 +20,8 @@ const resources = {
       inventoryEmpty: "Your inventory is empty",
       inventoryText:
         "No mob or item has been added to the favorites collection",
+      textFavorite: "Add to favorites",
+      inFavorite: "In Favorites",
     },
   },
   es: {
@@ -37,6 +39,8 @@ const resources = {
       inventoryEmpty: "Tu inventario esta vacío",
       inventoryText:
         "No se ha agregado ningún mob o item a la colección de favoritos",
+      textFavorite: "Agregar a favoritos",
+      inFavorite: "En Favoritos",
     },
   },
 };

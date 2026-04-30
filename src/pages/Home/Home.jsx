@@ -9,10 +9,12 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");  
+  const [subBehavior, setSubBehavior] = useState("");
+  const [subSize, setSubSize] = useState("");
 
   const loadItems = async () => {
     setLoading(true);
-    const newItems = await getAllItems(page, 10, searchTerm);
+    const newItems = await getAllItems(page, 10, searchTerm, categoriaSeleccionada, subBehavior, subSize);
     if (page === 1) {
       setItems(newItems);
     } else {
@@ -23,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     loadItems();
-  }, [page, searchTerm, categoriaSeleccionada]);
+  }, [page, searchTerm, categoriaSeleccionada, subBehavior, subSize]);
 
   const handleScroll = () => {
     const isBottom =
@@ -49,7 +51,19 @@ const Home = () => {
         categoriaSeleccionada={categoriaSeleccionada}
         setCategoriaSeleccionada={(categoria) => {
           setCategoriaSeleccionada(categoria);
+          setSubBehavior("");
+          setSubSize("");
           setPage(1); 
+        }}
+        
+        alFiltrarSecundario={(propiedad, valor) => {
+          if (propiedad === "behavior") {
+            setSubBehavior(valor);
+          }
+          if (propiedad === "size") {
+            setSubSize(valor);
+          }
+          setPage(1);
         }}
       />
       <div className="p-8 max-w-7xl mx-auto">

@@ -9,14 +9,14 @@ import iconItems from "../../assets/icons/Diamond_Chestplate.png";
 import iconMobs from "../../assets/icons/Creeper_Head.png";
 import iconSkins from "../../assets/icons/herobrine.png";
 
-const Hero = ({ alBuscar, categoriaSeleccionada, setCategoriaSeleccionada }) => {
+const Hero = ({ alBuscar, categoriaSeleccionada, setCategoriaSeleccionada, alFiltrarSecundario }) => {
   const { t } = useTranslation();
   const [activePanel, setActivePanel] = useState("bestiary");
   const [modalItem, setModalItem] = useState(null);
   const navigate = useNavigate();
 
-  const filtrosParaItems = ["TAGS", "COMPONENT", "STACK", "TIER", "TAB"];
-  const filtrosParaMobs = ["BEHAVIOR", "CLASS", "SIZE", "ORIGIN", "UTILITY", "SPECIAL"];
+  const filtrosParaItems = ["ETIQUETAS", "COMPONENTES", "STACK", "RANGO", "PESTAÑA"];
+  const filtrosParaMobs = ["COMPORTAMIENTO", "CLASE", "TAMAÑO", "ORIGEN", "UTILIDAD", "ESPECIAL"];
 
   const [gridItems, setGridItems] = useState([
     { id: "favs", title: t("favorites"), icon: iconFavs, path: "/favoritos" },
@@ -186,14 +186,14 @@ const Hero = ({ alBuscar, categoriaSeleccionada, setCategoriaSeleccionada }) => 
       </div>
 
 
-{/* ================= BARRA DE BÚSQUEDA Y FILTROS ================= */}
-      <div className="w-full bg-gray-500 border-b-8 border-black py-8 mb-12 px-4 shadow-[inset_0px_8px_15px_rgba(0,0,0,0.1)]">
+{/* busqueda y filtros */}
+      <div className="w-full bg-[#1E1E1E] border-b-8 border-black py-8 mb-12 px-4 shadow-[inset_0px_8px_15px_rgba(0,0,0,0.5)]">
         <div className="max-w-6xl mx-auto flex flex-col gap-4 font-mono">
           
-          {/* FILA 1: BUSCADOR Y BOTONES PRINCIPALES */}
           <div className="flex flex-col lg:flex-row gap-4 items-stretch">
             
-            {/* Input Buscador */}
+            {/* buscador */}
+
             <div className="flex-grow flex border-4 border-black bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
               <span className="p-3 font-bold text-gray-500">🔍</span>
               <input
@@ -204,14 +204,15 @@ const Hero = ({ alBuscar, categoriaSeleccionada, setCategoriaSeleccionada }) => 
               />
             </div>
 
-            {/* Botones de Categorías */}
+              {/* botones */}
+
             <div className="flex gap-4 h-full">
-              <button
+             <button
                 onClick={() => setCategoriaSeleccionada && setCategoriaSeleccionada("Todos")}
-                className={`px-6 py-3 border-4 border-black font-bold uppercase transition-all flex items-center gap-2 ${
+                className={`px-6 py-3 border-4 font-bold uppercase transition-all flex items-center gap-2 ${
                   categoriaSeleccionada === "Todos"
-                    ? "bg-black text-white shadow-none translate-y-1 translate-x-1"
-                    : "bg-white text-black hover:bg-gray-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
+                    ? "bg-black text-white border-white shadow-none translate-y-1 translate-x-1"
+                    : "bg-[#333333] text-white border-black hover:bg-[#444444] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
                 }`}
               >
                 ≡ TODO
@@ -219,53 +220,84 @@ const Hero = ({ alBuscar, categoriaSeleccionada, setCategoriaSeleccionada }) => 
 
               <button
                 onClick={() => setCategoriaSeleccionada && setCategoriaSeleccionada("ITEM")}
-                className={`px-6 py-3 border-4 border-black font-bold uppercase transition-all flex items-center gap-2 ${
+                className={`px-6 py-3 border-4 font-bold uppercase transition-all flex items-center gap-2 ${
                   categoriaSeleccionada === "ITEM"
-                    ? "bg-black text-white shadow-none translate-y-1 translate-x-1"
-                    : "bg-white text-black hover:bg-gray-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
+                    ? "bg-black text-[#55FFFF] border-[#55FFFF] shadow-none translate-y-1 translate-x-1"
+                    : "bg-[#333333] text-white border-black hover:bg-[#444444] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
                 }`}
               >
-                📦 ITEMS
+                ⛏️ ITEMS
               </button>
 
-              <button
+             <button
                 onClick={() => setCategoriaSeleccionada && setCategoriaSeleccionada("MOB")}
-                className={`px-6 py-3 border-4 border-black font-bold uppercase transition-all flex items-center gap-2 ${
+                className={`px-6 py-3 border-4 font-bold uppercase transition-all flex items-center gap-2 ${
                   categoriaSeleccionada === "MOB"
-                    ? "bg-black text-white shadow-none translate-y-1 translate-x-1"
-                    : "bg-white text-black hover:bg-gray-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
+                    ? "bg-black text-[#55FF55] border-[#55FF55] shadow-none translate-y-1 translate-x-1"
+                    : "bg-[#333333] text-white border-black hover:bg-[#444444] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
                 }`}
               >
-                📚 MOBS
+                🧟 MOBS
               </button>
             </div>
           </div>
 
-          {/* FILA 2: SUB-FILTROS DE ITEMS Y MOBS (Listas desplegables) */}
-          {categoriaSeleccionada !== "Todos" && (
-            <div className="pt-4 border-t-2 border-dashed border-gray-400 flex gap-4 flex-wrap">
-              
-              {/* Desplegables que aparecen solo si tocas ITEMS */}
-              {categoriaSeleccionada === "ITEM" &&
-                filtrosParaItems.map((nombreFiltro) => (
-                  <select
-                    key={nombreFiltro}
-                    className="border-4 border-black p-2 bg-white text-black font-bold text-sm uppercase cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-gray-100 outline-none focus:bg-gray-200"
-                  >
-                    <option value="">{nombreFiltro}: TODOS</option>
-                  </select>
-                ))}
+          {/* filtros */}
 
-              {/* Desplegables que aparecen solo si tocas MOBS */}
-              {categoriaSeleccionada === "MOB" &&
-                filtrosParaMobs.map((nombreFiltro) => (
-                  <select
-                    key={nombreFiltro}
-                    className="border-4 border-black p-2 bg-white text-black font-bold text-sm uppercase cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-gray-100 outline-none focus:bg-gray-200"
+          {categoriaSeleccionada !== "Todos" && (
+            <div className="pt-4 border-t-2 border-dashed border-gray-500 flex gap-4 flex-wrap">
+              
+              {categoriaSeleccionada === "ITEM" && (
+                <>
+                  <select 
+                    onChange={(e) => alFiltrarSecundario("behavior", e.target.value)}
+                    className="border-4 border-black p-2 bg-[#333333] text-white font-bold text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                   >
-                    <option value="">{nombreFiltro}: TODOS</option>
+                    <option value="">UTILIDAD: TODAS</option>
+                    <option value="Ataque">ATAQUE</option>
+                    <option value="Alquimia">ALQUIMIA</option>
+                    <option value="Construcción">CONSTRUCCIÓN</option>
+                    <option value="Alimento">ALIMENTO</option>
                   </select>
-                ))}
+
+                  <select 
+                    onChange={(e) => alFiltrarSecundario("size", e.target.value)}
+                    className="border-4 border-black p-2 bg-[#333333] text-white font-bold text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                  >
+                    <option value="">TIPO: TODOS</option>
+                    <option value="Herramienta">HERRAMIENTA</option>
+                    <option value="Bloque">BLOQUE</option>
+                    <option value="Consumible">CONSUMIBLE</option>
+                    <option value="Recurso">RECURSO</option>
+                  </select>
+                </>
+              )}
+
+              {categoriaSeleccionada === "MOB" && (
+                <>
+                  <select 
+                    onChange={(e) => alFiltrarSecundario("behavior", e.target.value)}
+                    className="border-4 border-black p-2 bg-[#333333] text-white font-bold text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                  >
+                    <option value="">COMPORTAMIENTO: TODOS</option>
+                    <option value="Hostil">HOSTIL</option>
+                    <option value="Neutral">NEUTRAL</option>
+                    <option value="Pasivo">PASIVO</option>
+                    <option value="Amigable">AMIGABLE</option>
+                  </select>
+
+                  <select 
+                    onChange={(e) => alFiltrarSecundario("size", e.target.value)}
+                    className="border-4 border-black p-2 bg-[#333333] text-white font-bold text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                  >
+                    <option value="">TAMAÑO: TODOS</option>
+                    <option value="Pequeño">PEQUEÑO</option>
+                    <option value="Mediano">MEDIANO</option>
+                    <option value="Grande">GRANDE</option>
+                    <option value="Gigante">GIGANTE</option>
+                  </select>
+                </>
+              )}
             </div>
           )}
         </div>

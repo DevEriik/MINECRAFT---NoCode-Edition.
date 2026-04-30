@@ -35,8 +35,7 @@ const Details = () => {
   // Revisar si está en favoritos
   useEffect(() => {
     if (item) {
-      const favorites =
-        JSON.parse(localStorage.getItem("minecraft_favorites")) || [];
+      const favorites = JSON.parse(localStorage.getItem("favoritos")) || [];
       const exists = favorites.some((fav) => fav.id === item.id);
       setIsSaved(exists);
     }
@@ -44,15 +43,18 @@ const Details = () => {
 
   // FUNCIONES
   const toggleFavorite = () => {
-    let favorites =
-      JSON.parse(localStorage.getItem("minecraft_favorites")) || [];
+    let favorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+
     if (isSaved) {
       favorites = favorites.filter((fav) => fav.id !== item.id);
     } else {
       favorites.push(item);
     }
-    localStorage.setItem("minecraft_favorites", JSON.stringify(favorites));
+
+    localStorage.setItem("favoritos", JSON.stringify(favorites));
     setIsSaved(!isSaved);
+
+    window.dispatchEvent(new Event("favoritesUpdated"));
   };
 
   if (loading) {

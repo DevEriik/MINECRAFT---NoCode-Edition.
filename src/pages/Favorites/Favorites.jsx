@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 export const Favorites = () => {
   const [cardsFavoritas, setCardsFavorites] = useState([]);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const favoritas = JSON.parse(localStorage.getItem("favoritos")) || [];
@@ -16,6 +16,13 @@ export const Favorites = () => {
       carsdActuales.filter((card) => card.id !== idParaBorrar),
     );
   };
+
+  // Logica para el panel de estadísticas
+  const totalGuardados = cardsFavoritas.length;
+  const totalMobs = cardsFavoritas.filter((item) => item.type === "MOB").length;
+  const totalItems = cardsFavoritas.filter(
+    (item) => item.type === "ITEM",
+  ).length;
 
   return (
     <div className="min-h-screen bg-[#2b2b2b] p-8">
@@ -34,11 +41,53 @@ export const Favorites = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {cardsFavoritas.map((item) => (
-            <Card key={item.id} item={item} onEliminar={quitarDeVista} />
-          ))}
-        </div>
+        <>
+          {/* ================= PANEL DE ESTADÍSTICAS ================= */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-white border-4 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-w-4xl">
+            {/* Total */}
+            <div className="flex-1 border-4 border-black bg-gray-200 p-4 flex flex-col items-center justify-center shadow-inner transition-all duration-200 hover:-translate-y-2 hover:bg-gray-300">
+              <span className="text-4xl md:text-5xl font-black text-black tracking-tighter">
+                {totalGuardados}
+              </span>
+              <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-gray-600 mt-2 w-full text-center">
+                {t("total_saved")}
+              </span>
+            </div>
+
+            {/* Mobs */}
+            <div className="flex-1 border-4 border-black bg-[#1565C0] p-4 flex flex-col items-center justify-center transition-all duration-200 hover:-translate-y-2 hover:brightness-110">
+              <span
+                className="text-4xl md:text-5xl font-black text-white tracking-tighter"
+                style={{ textShadow: "2px 2px 0 #000" }}
+              >
+                {totalMobs}
+              </span>
+              <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-white mt-2 w-full text-center">
+                {t("mobs")}
+              </span>
+            </div>
+
+            {/* Ítems */}
+            <div className="flex-1 border-4 border-black bg-[#2E7D32] p-4 flex flex-col items-center justify-center transition-all duration-200 hover:-translate-y-2 hover:brightness-110">
+              <span
+                className="text-4xl md:text-5xl font-black text-white tracking-tighter"
+                style={{ textShadow: "2px 2px 0 #000" }}
+              >
+                {totalItems}
+              </span>
+              <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-white mt-2 w-full text-center">
+                {t("items")}
+              </span>
+            </div>
+          </div>
+
+          {/* ================= CARDS ================= */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {cardsFavoritas.map((item) => (
+              <Card key={item.id} item={item} onEliminar={quitarDeVista} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

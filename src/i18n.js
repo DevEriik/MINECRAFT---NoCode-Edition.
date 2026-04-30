@@ -3,7 +3,6 @@ import { initReactI18next } from "react-i18next";
 
 const savedLanguage = localStorage.getItem("language") || "es";
 
-// src/i18n.js
 const resources = {
   en: {
     translation: {
@@ -34,6 +33,9 @@ const resources = {
       close: "CLOSE",
       textFavorite: "Add to favorites",
       inFavorite: "In Favorites",
+      total_saved: "TOTAL SAVED",
+      mobs: "MOBS",
+      items: "ITEMS",
     },
   },
   es: {
@@ -65,6 +67,9 @@ const resources = {
       close: "CERRAR",
       textFavorite: "Agregar a favoritos",
       inFavorite: "En Favoritos",
+      total_saved: "TOTAL GUARDADOS",
+      mobs: "MOBS",
+      items: "ÍTEMS",
     },
   },
 };

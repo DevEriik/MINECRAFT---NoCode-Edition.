@@ -9,11 +9,14 @@ import iconItems from "../../assets/icons/Diamond_Chestplate.png";
 import iconMobs from "../../assets/icons/Creeper_Head.png";
 import iconSkins from "../../assets/icons/herobrine.png";
 
-const Hero = () => {
+const Hero = ({ alBuscar, categoriaSeleccionada, setCategoriaSeleccionada }) => {
   const { t } = useTranslation();
   const [activePanel, setActivePanel] = useState("bestiary");
   const [modalItem, setModalItem] = useState(null);
   const navigate = useNavigate();
+
+  const filtrosParaItems = ["TAGS", "COMPONENT", "STACK", "TIER", "TAB"];
+  const filtrosParaMobs = ["BEHAVIOR", "CLASS", "SIZE", "ORIGIN", "UTILITY", "SPECIAL"];
 
   const [gridItems, setGridItems] = useState([
     { id: "favs", title: t("favorites"), icon: iconFavs, path: "/favoritos" },
@@ -181,6 +184,93 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+
+{/* ================= BARRA DE BÚSQUEDA Y FILTROS ================= */}
+      <div className="w-full bg-gray-500 border-b-8 border-black py-8 mb-12 px-4 shadow-[inset_0px_8px_15px_rgba(0,0,0,0.1)]">
+        <div className="max-w-6xl mx-auto flex flex-col gap-4 font-mono">
+          
+          {/* FILA 1: BUSCADOR Y BOTONES PRINCIPALES */}
+          <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+            
+            {/* Input Buscador */}
+            <div className="flex-grow flex border-4 border-black bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+              <span className="p-3 font-bold text-gray-500">🔍</span>
+              <input
+                type="text"
+                placeholder="BUSCAR ... "
+                onChange={(evento) => alBuscar && alBuscar(evento.target.value)}
+                className="flex-grow p-3 font-mono text-lg outline-none w-full text-black placeholder-gray-400 font-bold uppercase"
+              />
+            </div>
+
+            {/* Botones de Categorías */}
+            <div className="flex gap-4 h-full">
+              <button
+                onClick={() => setCategoriaSeleccionada && setCategoriaSeleccionada("Todos")}
+                className={`px-6 py-3 border-4 border-black font-bold uppercase transition-all flex items-center gap-2 ${
+                  categoriaSeleccionada === "Todos"
+                    ? "bg-black text-white shadow-none translate-y-1 translate-x-1"
+                    : "bg-white text-black hover:bg-gray-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
+                }`}
+              >
+                ≡ TODO
+              </button>
+
+              <button
+                onClick={() => setCategoriaSeleccionada && setCategoriaSeleccionada("ITEM")}
+                className={`px-6 py-3 border-4 border-black font-bold uppercase transition-all flex items-center gap-2 ${
+                  categoriaSeleccionada === "ITEM"
+                    ? "bg-black text-white shadow-none translate-y-1 translate-x-1"
+                    : "bg-white text-black hover:bg-gray-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
+                }`}
+              >
+                📦 ITEMS
+              </button>
+
+              <button
+                onClick={() => setCategoriaSeleccionada && setCategoriaSeleccionada("MOB")}
+                className={`px-6 py-3 border-4 border-black font-bold uppercase transition-all flex items-center gap-2 ${
+                  categoriaSeleccionada === "MOB"
+                    ? "bg-black text-white shadow-none translate-y-1 translate-x-1"
+                    : "bg-white text-black hover:bg-gray-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1"
+                }`}
+              >
+                📚 MOBS
+              </button>
+            </div>
+          </div>
+
+          {/* FILA 2: SUB-FILTROS DE ITEMS Y MOBS (Listas desplegables) */}
+          {categoriaSeleccionada !== "Todos" && (
+            <div className="pt-4 border-t-2 border-dashed border-gray-400 flex gap-4 flex-wrap">
+              
+              {/* Desplegables que aparecen solo si tocas ITEMS */}
+              {categoriaSeleccionada === "ITEM" &&
+                filtrosParaItems.map((nombreFiltro) => (
+                  <select
+                    key={nombreFiltro}
+                    className="border-4 border-black p-2 bg-white text-black font-bold text-sm uppercase cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-gray-100 outline-none focus:bg-gray-200"
+                  >
+                    <option value="">{nombreFiltro}: TODOS</option>
+                  </select>
+                ))}
+
+              {/* Desplegables que aparecen solo si tocas MOBS */}
+              {categoriaSeleccionada === "MOB" &&
+                filtrosParaMobs.map((nombreFiltro) => (
+                  <select
+                    key={nombreFiltro}
+                    className="border-4 border-black p-2 bg-white text-black font-bold text-sm uppercase cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-gray-100 outline-none focus:bg-gray-200"
+                  >
+                    <option value="">{nombreFiltro}: TODOS</option>
+                  </select>
+                ))}
+            </div>
+          )}
+        </div>
+      </div>
+
 
       {/* ================= MODAL ================= */}
       {modalItem && (

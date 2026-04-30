@@ -8,6 +8,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");  
 
   const loadItems = async () => {
     setLoading(true);
@@ -22,7 +23,7 @@ const Home = () => {
 
   useEffect(() => {
     loadItems();
-  }, [page, searchTerm]);
+  }, [page, searchTerm, categoriaSeleccionada]);
 
   const handleScroll = () => {
     const isBottom =
@@ -40,22 +41,19 @@ const Home = () => {
 
   return (
     <div className="bg-[#1E1E1E] min-h-screen w-full">
-      <Hero />
+      <Hero 
+        alBuscar={(texto) => {
+          setSearchTerm(texto);
+          setPage(1); 
+        }}
+        categoriaSeleccionada={categoriaSeleccionada}
+        setCategoriaSeleccionada={(categoria) => {
+          setCategoriaSeleccionada(categoria);
+          setPage(1); 
+        }}
+      />
       <div className="p-8 max-w-7xl mx-auto">
-        <div className="mb-8 text-black border-4 border-black p-2 flex bg-white">
-          <span className="font-bold text-gray-500 mr-2"></span>
-          <input
-            type="text"
-            placeholder="Buscar"
-            className="w-full outline-none font-bold uppercase"
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setPage(1);
-            }}
-          />
-        </div>
-
+    
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((elemento) => (
             <Card key={elemento.id} item={elemento} />

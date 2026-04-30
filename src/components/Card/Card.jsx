@@ -40,9 +40,12 @@ export const Card = ({ item, onEliminar }) => {
     } else {
       favGuardados.push(item);
       mostrarNotificacion(`¡${item.name} se guardó en favoritos!`, `agregar`);
+      localStorage.setItem("favoritos", JSON.stringify(favGuardados));
     }
-    localStorage.setItem("favoritos", JSON.stringify(favGuardados));
+
     setEsFavorito(!esFavorito);
+
+    window.dispatchEvent(new Event("favoritesUpdated"));
   };
 
   return (

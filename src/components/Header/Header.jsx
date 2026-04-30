@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "./Header.module.css";
@@ -11,6 +11,25 @@ import iconoSkin from "../../assets/icons/name_tag.png";
 const Header = () => {
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [favCount, setFavCount] = useState(0);
+
+  // LÓGICA DEL CONTADOR
+  const updateFavCount = () => {
+    const favoritas = JSON.parse(localStorage.getItem("favoritos")) || [];
+    setFavCount(favoritas.length);
+  };
+
+  useEffect(() => {
+    updateFavCount();
+
+    window.addEventListener("favoritesUpdated", updateFavCount);
+    window.addEventListener("storage", updateFavCount);
+
+    return () => {
+      window.removeEventListener("favoritesUpdated", updateFavCount);
+      window.removeEventListener("storage", updateFavCount);
+    };
+  }, []);
 
   const toggleLanguage = () => {
     const currentLang = i18n.language || "es";
@@ -31,7 +50,6 @@ const Header = () => {
           src={logoImage}
           alt="NoCodeCraft Logo"
           className="h-10 sm:h-12 md:h-14 w-auto object-contain drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]"
-          
         />
       </Link>
 
@@ -50,11 +68,18 @@ const Header = () => {
           to="/favoritos"
           className="flex items-center gap-2 text-lg text-gray-700 hover:text-[#ff3333] uppercase tracking-wide cursor-pointer transition-transform hover:-translate-y-1"
         >
-          <img
-            src={corazon}
-            alt="Favoritos"
-            className="w-8 h-8 object-contain"
-          />
+          <div className="relative">
+            <img
+              src={corazon}
+              alt="Favoritos"
+              className="w-8 h-8 object-contain"
+            />
+            {favCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-[#ff3333] text-white text-[10px] font-black border-2 border-black w-5 h-5 flex items-center justify-center">
+                {favCount}
+              </span>
+            )}
+          </div>
           {t("favorites")}
         </Link>
 
@@ -63,12 +88,7 @@ const Header = () => {
           to="/skins"
           className="flex items-center gap-2 text-lg text-gray-700 hover:text-[var(--color-minecraft-amethyst)] uppercase tracking-wide cursor-pointer transition-transform hover:-translate-y-1"
         >
-          <img
-            src={iconoSkin}
-            className="w-8 h-8"
-            
-            alt="Skins"
-          />
+          <img src={iconoSkin} className="w-8 h-8" alt="Skins" />
           {t("skin_creator")}
         </Link>
       </nav>
@@ -101,29 +121,36 @@ const Header = () => {
                 src={iconoHome}
                 alt="Home"
                 className="w-7 h-7 inline-block mr-2"
-                
               />
               {t("home")}
             </Link>
+
+            {/* LINK FAVORITOS CELULAR */}
             <Link
               to="/favoritos"
               className={styles.navItem}
               onClick={toggleMenu}
             >
-              <img
-                src={corazon}
-                alt="Favoritos"
-                className="w-7 h-7 inline-block mr-2"
-                
-              />
+              <div className="relative inline-block mr-2">
+                <img
+                  src={corazon}
+                  alt="Favoritos"
+                  className="w-7 h-7 object-contain"
+                />
+                {favCount > 0 && (
+                  <span className="absolute -top-1 -right-2 bg-[#ff3333] text-white text-[9px] font-black border-2 border-black w-4 h-4 flex items-center justify-center">
+                    {favCount}
+                  </span>
+                )}
+              </div>
               {t("favorites")}
             </Link>
+
             <Link to="/skins" className={styles.navItem} onClick={toggleMenu}>
               <img
                 src={iconoSkin}
                 alt="Skins"
                 className="w-7 h-7 inline-block mr-2"
-                
               />
               {t("skin_creator")}
             </Link>

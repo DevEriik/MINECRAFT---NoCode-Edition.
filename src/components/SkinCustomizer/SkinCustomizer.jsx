@@ -47,7 +47,6 @@ const SkinCustomizer = ({ currentSkin, onUpdateSkin }) => {
       <hr className="border-2 border-dashed border-[#9ca3af]" />
 
       {/* Ropero */}
-
       <div className="flex flex-col gap-6">
         <div>
           <h3 className="text-lg font-bold mb-3 text-[#000000]">
